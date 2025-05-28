@@ -43,17 +43,28 @@ const handler = async function () {
             erro.classList.remove("d-none");
             return;
         }
+        const n2Text =
+            filledAD1AP1 && !filledAD2AP2 ? `Você precisa de ${json.nota_necessaria_n2.toFixed(2)}` :
+                "Veja abaixo a nota necessária";
+        const ap3Text =
+            filledAD1AP1 && filledAD2AP2 && json.nf < 6 && data.ap3 === null
+                ? `Você precisa de ${json.nota_necessaria_ap3.toFixed(2)}`
+                : "Veja abaixo a nota necessária";
+
+        form.elements["ad2"].placeholder = n2Text;
+        form.elements["ap2"].placeholder = n2Text;
+        form.elements["ap3"].placeholder = ap3Text;
 
         // Exibe nota necessária em N2, se aplicável
         document.getElementById("n2-necessaria").textContent =
             filledAD1AP1 && !filledAD2AP2 ? json.nota_necessaria_n2.toFixed(2) :
-                filledAD1AP1 && filledAD2AP2 ? "0.00" : "-";
+                filledAD1AP1 && filledAD2AP2 ? "Já preenchido" : "-";
 
         // Exibe nota necessária em AP3, se aplicável
         document.getElementById("ap3-necessaria").textContent =
             filledAD1AP1 && filledAD2AP2 && json.nf < 6 && data.ap3 === null
                 ? json.nota_necessaria_ap3.toFixed(2)
-                : (json.nf < 6 && data.ap3 !== null) ? "0.00" : "-";
+                : (json.nf < 6 && data.ap3 !== null) ? "Já preenchido" : "-";
 
         // Exibe a nota final
         document.getElementById("nf").textContent = json.nf !== null ? json.nf.toFixed(2) : "-";
@@ -100,6 +111,10 @@ limparBtn.onclick = function () {
     erro.classList.add("d-none");
     ap3Container.style.display = "none";
     ad2Ap2Container.style.display = "none";
+
+    form.elements["ad2"].placeholder = "Veja abaixo a nota necessária";
+    form.elements["ap2"].placeholder = "Veja abaixo a nota necessária";
+    form.elements["ap3"].placeholder = "Veja abaixo a nota necessária";
 
     // Reativa o manipulador de eventos após limpar
     const reativar = () => {
