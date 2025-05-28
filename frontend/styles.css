@@ -18,3 +18,25 @@
 .status-pulse {
     animation: pulse 2.5s ease-in-out;
 }
+
+footer a i.fab {
+    color: white;
+}
+
+footer a i.fab:hover {
+    color: #66bfff;
+}
+
+.list-group-item {
+    border: none;
+}
+
+.list-group {
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    overflow: hidden;
+}
+
+.centralizado-limite {
+    max-width: 640px;
+}
