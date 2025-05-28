@@ -7,6 +7,7 @@
     <title>Avaliador de Disciplina</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -16,23 +17,29 @@
         <form id="form" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="ad1" class="form-label">AD1</label>
-                <input type="number" class="form-control" id="ad1" name="ad1">
+                <input type="number" step="0.1" class="form-control" id="ad1" name="ad1"
+                    placeholder="Comece colocando a AD1">
             </div>
             <div class="mb-3">
                 <label for="ap1" class="form-label">AP1</label>
-                <input type="number" class="form-control" id="ap1" name="ap1">
+                <input type="number" step="0.1" class="form-control" id="ap1" name="ap1" placeholder="Depois a AP1">
             </div>
-            <div class="mb-3">
-                <label for="ad2" class="form-label">AD2</label>
-                <input type="number" class="form-control" id="ad2" name="ad2">
-            </div>
-            <div class="mb-3">
-                <label for="ap2" class="form-label">AP2</label>
-                <input type="number" class="form-control" id="ap2" name="ap2">
+            <div id="ad2-ap2-container" style="display: none;">
+                <div class="mb-3">
+                    <label for="ad2" class="form-label">AD2</label>
+                    <input type="number" step="0.1" class="form-control" id="ad2" name="ad2"
+                        placeholder="Veja abaixo a nota necessária">
+                </div>
+                <div class="mb-3">
+                    <label for="ap2" class="form-label">AP2</label>
+                    <input type="number" step="0.1" class="form-control" id="ap2" name="ap2"
+                        placeholder="Veja abaixo a nota necessária">
+                </div>
             </div>
             <div id="ap3-container" class="mb-3" style="display: none;">
                 <label for="ap3" class="form-label">AP3</label>
-                <input type="number" class="form-control" id="ap3" name="ap3">
+                <input type="number" step="0.1" class="form-control" id="ap3" name="ap3"
+                    placeholder="Veja abaixo a nota necessária">
             </div>
 
             <div class="d-flex justify-content-between">
@@ -45,11 +52,10 @@
         <div class="mt-5">
             <h5>Resultado</h5>
             <ul class="list-group">
-                <li class="list-group-item">Nota N2 necessária para passar direto: <span id="n2-necessaria">-</span>
-                </li>
-                <li class="list-group-item">Nota necessária para passar com AP3: <span id="ap3-necessaria">-</span></li>
-                <li class="list-group-item">Nota final: <span id="nf">-</span></li>
-                <li class="list-group-item">Status: <span id="status">-</span></li>
+                <li class="list-group-item">Nota necessária N2: <strong id="n2-necessaria">-</strong></li>
+                <li class="list-group-item">Nota necessária AP3: <strong id="ap3-necessaria">-</strong></li>
+                <li class="list-group-item">Nota final: <strong id="nf">-</strong></li>
+                <li class="list-group-item">Status: <strong id="status" class="fw-bold">-</strong></li>
             </ul>
         </div>
     </div>
