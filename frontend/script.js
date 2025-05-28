@@ -6,6 +6,11 @@ const ad2Ap2Container = document.getElementById("ad2-ap2-container");
 const limparBtn = document.getElementById("limpar");
 const ap2Placeholder = document.getElementById("ap2");
 const ap2Container = document.getElementById("ap2-necessaria-container");
+const n1Item = document.getElementById("n1-item");
+const n2Item = document.getElementById("n2-item");
+const mediaItem = document.getElementById("media-item");
+const n2NecessariaItem = document.getElementById("n2-necessaria-item");
+const ap3NecessariaItem = document.getElementById("ap3-necessaria-item");
 
 // Lista dos campos usados no formulário
 const campos = ["ad1", "ap1", "ad2", "ap2", "ap3"];
@@ -46,7 +51,6 @@ const handler = async function () {
             return;
         }
 
-
         const n2Text =
             filledAD1AP1 && !filledAD2AP2 ? `Você precisa de ${json.nota_necessaria_n2.toFixed(2)}` :
                 "Veja abaixo a nota necessária";
@@ -59,15 +63,16 @@ const handler = async function () {
         form.elements["ap2"].placeholder = n2Text;
         form.elements["ap3"].placeholder = ap3Text;
 
-        // Exibe nota necessária em N2, se aplicável
-        document.getElementById("n2-necessaria").textContent =
-            filledAD1AP1 && !filledAD2AP2 ? json.nota_necessaria_n2.toFixed(2) :
-                filledAD1AP1 && filledAD2AP2 ? "Já preenchido" : "-";
+        // N2 necessária
+        if (filledAD1AP1 && !filledAD2AP2) {
+            document.getElementById("n2-necessaria").textContent = json.nota_necessaria_n2.toFixed(2);
+            n2NecessariaItem.style.display = "list-item";
+        } else {
+            n2NecessariaItem.style.display = "none";
+        }
 
-        // Exibe ou oculta a nota necessária na AP2
+        // AP2 necessária
         const showAp2Hint = filledAD1AP1 && data.ad2 !== null && data.ap2 === null;
-        // const hideAp2Hint = data.ap2 !== null;
-
         if (showAp2Hint) {
             const notaAp2 = json.nota_necessaria_ap2.toFixed(2);
             ap2Container.style.display = "list-item";
@@ -77,11 +82,13 @@ const handler = async function () {
             ap2Container.style.display = "none";
         }
 
-        // Exibe nota necessária em AP3, se aplicável
-        document.getElementById("ap3-necessaria").textContent =
-            filledAD1AP1 && filledAD2AP2 && json.nf < 6 && data.ap3 === null
-                ? json.nota_necessaria_ap3.toFixed(2)
-                : (json.nf < 6 && data.ap3 !== null) ? "Já preenchido" : "-";
+        // AP3 necessária
+        if (filledAD1AP1 && filledAD2AP2 && json.nf < 6 && data.ap3 === null) {
+            document.getElementById("ap3-necessaria").textContent = json.nota_necessaria_ap3.toFixed(2);
+            ap3NecessariaItem.style.display = "list-item";
+        } else {
+            ap3NecessariaItem.style.display = "none";
+        }
 
         // Exibe a nota final
         document.getElementById("nf").textContent = json.nf !== null ? json.nf.toFixed(2) : "-";
@@ -97,6 +104,26 @@ const handler = async function () {
         // Exibe o container de AP3 se necessário
         ap3Container.style.display =
             filledAD1AP1 && filledAD2AP2 && json.nf < 6 ? "block" : "none";
+
+        if (filledAD1AP1) {
+            document.getElementById("n1").textContent = json.n1.toFixed(2);
+            n1Item.style.display = "list-item";
+        } else {
+            document.getElementById("n1").textContent = "-";
+            n1Item.style.display = "none";
+        }
+
+        if (filledAD2AP2) {
+            document.getElementById("n2").textContent = json.n2.toFixed(2);
+            document.getElementById("media").textContent = json.n.toFixed(2);
+            n2Item.style.display = "list-item";
+            mediaItem.style.display = "list-item";
+        } else {
+            document.getElementById("n2").textContent = "-";
+            document.getElementById("media").textContent = "-";
+            n2Item.style.display = "none";
+            mediaItem.style.display = "none";
+        }
 
     } catch (e) {
         erro.textContent = "Erro de rede ou servidor indisponível.";
@@ -125,6 +152,15 @@ limparBtn.onclick = function () {
     document.getElementById("nf").textContent = "-";
     document.getElementById("status").textContent = "-";
     document.getElementById("ap2-necessaria").textContent = "-";
+    document.getElementById("n1").textContent = "-";
+    document.getElementById("n2").textContent = "-";
+    document.getElementById("media").textContent = "-";
+
+    n1Item.style.display = "none";
+    n2Item.style.display = "none";
+    mediaItem.style.display = "none";
+    n2NecessariaItem.style.display = "none";
+    ap3NecessariaItem.style.display = "none";
 
     erro.textContent = "";
     erro.classList.add("d-none");
