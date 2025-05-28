@@ -1,0 +1,44 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliador de Disciplina</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Avaliador de Disciplina</h1>
+
+    <form id="form">
+        <label>AD1:
+            <input type="number" step="0.1" name="ad1">
+        </label>
+        <label>AP1:
+            <input type="number" step="0.1" name="ap1">
+        </label>
+        <label>AD2:
+            <input type="number" step="0.1" name="ad2">
+        </label>
+        <label>AP2:
+            <input type="number" step="0.1" name="ap2">
+        </label>
+        <label id="ap3-container" style="display:none">AP3:
+            <input type="number" step="0.1" name="ap3">
+        </label>
+    </form>
+
+    <div class="output">
+        <div id="erro" class="error"></div>
+        <p>Nota necessária N2: <strong id="n2-necessaria">-</strong></p>
+        <p>Nota necessária AP3: <strong id="ap3-necessaria">-</strong></p>
+        <p>Nota Final (NF): <strong id="nf">-</strong></p>
+        <p>Status: <strong id="status">-</strong></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
