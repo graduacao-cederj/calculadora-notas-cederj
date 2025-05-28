@@ -4,6 +4,8 @@ const erro = document.getElementById("erro");
 const ap3Container = document.getElementById("ap3-container");
 const ad2Ap2Container = document.getElementById("ad2-ap2-container");
 const limparBtn = document.getElementById("limpar");
+const ap2Placeholder = document.getElementById("ap2");
+const ap2Container = document.getElementById("ap2-necessaria-container");
 
 // Lista dos campos usados no formulário
 const campos = ["ad1", "ap1", "ad2", "ap2", "ap3"];
@@ -43,6 +45,8 @@ const handler = async function () {
             erro.classList.remove("d-none");
             return;
         }
+
+
         const n2Text =
             filledAD1AP1 && !filledAD2AP2 ? `Você precisa de ${json.nota_necessaria_n2.toFixed(2)}` :
                 "Veja abaixo a nota necessária";
@@ -59,6 +63,19 @@ const handler = async function () {
         document.getElementById("n2-necessaria").textContent =
             filledAD1AP1 && !filledAD2AP2 ? json.nota_necessaria_n2.toFixed(2) :
                 filledAD1AP1 && filledAD2AP2 ? "Já preenchido" : "-";
+
+        // Exibe ou oculta a nota necessária na AP2
+        const showAp2Hint = filledAD1AP1 && data.ad2 !== null && data.ap2 === null;
+        // const hideAp2Hint = data.ap2 !== null;
+
+        if (showAp2Hint) {
+            const notaAp2 = json.nota_necessaria_ap2.toFixed(2);
+            ap2Container.style.display = "list-item";
+            document.getElementById("ap2-necessaria").textContent = notaAp2;
+            form.elements["ap2"].placeholder = `Você precisa de ${notaAp2}`;
+        } else {
+            ap2Container.style.display = "none";
+        }
 
         // Exibe nota necessária em AP3, se aplicável
         document.getElementById("ap3-necessaria").textContent =
@@ -107,14 +124,18 @@ limparBtn.onclick = function () {
     document.getElementById("ap3-necessaria").textContent = "-";
     document.getElementById("nf").textContent = "-";
     document.getElementById("status").textContent = "-";
+    document.getElementById("ap2-necessaria").textContent = "-";
+
     erro.textContent = "";
     erro.classList.add("d-none");
     ap3Container.style.display = "none";
     ad2Ap2Container.style.display = "none";
+    ap2Container.style.display = "none";
 
     form.elements["ad2"].placeholder = "Veja abaixo a nota necessária";
     form.elements["ap2"].placeholder = "Veja abaixo a nota necessária";
     form.elements["ap3"].placeholder = "Veja abaixo a nota necessária";
+    ap2Placeholder.placeholder = "Veja abaixo a nota necessária";
 
     // Reativa o manipulador de eventos após limpar
     const reativar = () => {

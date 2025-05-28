@@ -33,6 +33,7 @@ def avaliar(notas: EntradaNotas):
             "aprovado": d.aprovado,
             "nota_necessaria_n2": d.nota_necessaria_n2_para_aprovacao(),
             "nota_necessaria_ap3": d.nota_necessaria_ap3_para_aprovacao(),
+            "nota_necessaria_ap2": d.nota_necessaria_ap2_para_aprovacao(),
         }
     except NotaInvalidaError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -45,6 +46,7 @@ def avaliar(notas: EntradaNotas):
             "erro_nf": str(e),
             "aprovado": d.aprovado,
             "nota_necessaria_ap3": d.nota_necessaria_ap3_para_aprovacao(),
+            "nota_necessaria_ap2": d.nota_necessaria_ap2_para_aprovacao(),
         }
 
 

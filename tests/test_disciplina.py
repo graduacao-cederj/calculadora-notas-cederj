@@ -56,14 +56,26 @@ def test_uso_de_ap3_para_aprovacao():
     assert d.aprovado is True
 
 
+def test_nota_necessaria_n2_para_aprovacao_nao_ultrapassa_limite_superior():
+    d = Disciplina(ad1=0, ap1=0)
+    nota_necessaria = d.nota_necessaria_n2_para_aprovacao()
+    assert nota_necessaria == pytest.approx(10.0)
+
+    d.ad1 = 10
+    d.ap1 = 10
+    nota_necessaria = d.nota_necessaria_n2_para_aprovacao()
+    assert nota_necessaria == pytest.approx(2.0)
+
+
 def test_nota_necessaria_n2_para_aprovacao():
     d = Disciplina()
     assert d.nota_necessaria_n2_para_aprovacao() is None
 
     d = Disciplina(ad1=1.0, ap1=5.0)
-    assert d.n1 == pytest.approx((1 * 2 + 5 * 8) / 10)  # 4.4
+    assert d.n1 == pytest.approx((1 * 2 + 5 * 8) / 10)  # 4.2
     n1 = d.n1
-    esperado = max(0, 12 - n1)
+    esperado = max(0, d.SOMA_MINIMA_APROVACAO_DIRETA - n1)
+    assert esperado == pytest.approx(7.8)
     assert d.nota_necessaria_n2_para_aprovacao() == pytest.approx(esperado)
 
 

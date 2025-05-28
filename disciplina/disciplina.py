@@ -139,7 +139,9 @@ class Disciplina:
         """
         if self.n1 is None:
             return None
-        return max(0, self.SOMA_MINIMA_APROVACAO_DIRETA - self.n1)
+        return min(
+            self.MAIOR_NOTA_ACEITA, self.SOMA_MINIMA_APROVACAO_DIRETA - self.n1
+        )
 
     def nota_necessaria_ap2_para_aprovacao(self) -> float | None:
         """Retorna a nota mínima de AP2 para que o aluno seja aprovado sem
