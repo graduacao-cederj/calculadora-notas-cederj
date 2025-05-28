@@ -141,6 +141,20 @@ class Disciplina:
             return None
         return max(0, self.SOMA_MINIMA_APROVACAO_DIRETA - self.n1)
 
+    def nota_necessaria_ap2_para_aprovacao(self) -> float | None:
+        """Retorna a nota mínima de AP2 para que o aluno seja aprovado sem
+        precisar de AP3."""
+        if self.n1 is None or self.ad2 is None:
+            return None
+
+        n1 = self.n1
+        n2_necessaria = self.SOMA_MINIMA_APROVACAO_DIRETA - n1
+        nota_ap2 = (
+            self.SOMA_PESOS * n2_necessaria - self.PESO_AD * self.ad2
+        ) / self.PESO_AP
+
+        return max(0.0, min(nota_ap2, self.MAIOR_NOTA_ACEITA))
+
     def nota_necessaria_ap3_para_aprovacao(self):
         """
         Retorna a nota mínima na AP3 para obter NF >= 5, assumindo N1 e N2

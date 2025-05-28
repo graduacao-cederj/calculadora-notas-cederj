@@ -119,3 +119,43 @@ def test_repr_retorna_str_formatada():
     assert "Disciplina(" in r
     assert "N1=" in r
     assert "Aprovado=" in r
+
+
+def test_ap2_necessaria_para_aprovacao_valida():
+    d = Disciplina(ad1=6, ap1=6, ad2=6)
+    nota_ap2 = d.nota_necessaria_ap2_para_aprovacao()
+    assert nota_ap2 == pytest.approx(6.0)
+    assert d.ap2 is None
+    d.ap2 = nota_ap2
+    assert d.nf >= 6
+
+
+def test_ap2_necessaria_com_notas_altas_retorna_zero():
+    d = Disciplina(ad1=10, ap1=10, ad2=10)
+    assert d.nota_necessaria_ap2_para_aprovacao() == 0.0
+
+
+def test_ap2_necessaria_nunca_ultrapassa_limite_superior():
+    d = Disciplina(ad1=0, ap1=0, ad2=0)
+    nota_ap2 = d.nota_necessaria_ap2_para_aprovacao()
+    assert nota_ap2 == pytest.approx(10.0)
+
+
+def test_ap2_necessaria_nunca_negativa():
+    d = Disciplina(ad1=10, ap1=10, ad2=10)
+    assert d.nota_necessaria_ap2_para_aprovacao() == 0.0
+
+
+def test_ap2_necessaria_com_notas_baixas():
+    d = Disciplina(ad1=4, ap1=4, ad2=4)
+    nota_ap2 = d.nota_necessaria_ap2_para_aprovacao()
+    assert nota_ap2 == pytest.approx(9.0)
+
+
+def test_ap2_necessaria_invalida_se_faltam_notas():
+    d1 = Disciplina(ad1=None, ap1=6, ad2=6)
+    d2 = Disciplina(ad1=6, ap1=None, ad2=6)
+    d3 = Disciplina(ad1=6, ap1=6, ad2=None)
+    assert d1.nota_necessaria_ap2_para_aprovacao() is None
+    assert d2.nota_necessaria_ap2_para_aprovacao() is None
+    assert d3.nota_necessaria_ap2_para_aprovacao() is None
