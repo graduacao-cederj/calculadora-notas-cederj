@@ -74,6 +74,41 @@
             <button type="button" id="limpar" class="btn btn-secondary">Limpar</button>
         </div>
 
+        <div class="accordion my-4" id="accordionInstrucoes">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingInstrucao">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseInstrucao" aria-expanded="false" aria-controls="collapseInstrucao">
+                        Instruções
+                    </button>
+                </h2>
+                <div id="collapseInstrucao" class="accordion-collapse collapse" aria-labelledby="headingInstrucao"
+                    data-bs-parent="#accordionInstrucoes">
+                    <div class="accordion-body">
+                        Preencha as notas nos campos indicados. A cada etapa, a página mostrará automaticamente:
+                        <ul>
+                            <li>Novos campos de notas, se o aluno precisar</li>
+                            <li>Notas necessárias para aprovação</li>
+                            <li>Notas parciais e finais</li>
+                            <li>Status de aprovação</li>
+                        </ul>
+                        <hr>
+                        Os campos e resultados aparecem dinamicamente conforme as notas forem informadas.
+                        <hr>
+                        <p><strong>Fórmulas de cálculo:</strong></p>
+                        <ul class="mb-0">
+                            <li><strong>N1</strong> = AD1 × 0.2 + AP1 × 0.8</li>
+                            <li><strong>N2</strong> = AD2 × 0.2 + AP2 × 0.8</li>
+                            <li><strong>N</strong> = (N1 + N2) / 2</li>
+                            <li>Se <strong>N ≥ 6</strong>, então <strong>NF = N</strong></li>
+                            <li>Senão, <strong>NF = (maior(N1, N2) + AP3) / 2</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <footer class="text-center mt-5">
             <p class="mb-1">Desenvolvido por <a href="https://franciscobustamante.com.br" target="_blank"
                     rel="noopener noreferrer">Francisco Bustamante</a></p>
