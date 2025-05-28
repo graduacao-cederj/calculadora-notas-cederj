@@ -11,6 +11,19 @@ class SemNotaFinalError(Exception):
 
 
 class Disciplina:
+    MENOR_NOTA_ACEITA = 0.0
+    MAIOR_NOTA_ACEITA = 10.0
+
+    MEDIA_APROVACAO_DIRETA = 6.0
+    MEDIA_APROVACAO_AP3 = 5.0
+
+    SOMA_MINIMA_APROVACAO_DIRETA = 12.0
+    SOMA_MINIMA_APROVACAO_AP3 = 10.0
+
+    PESO_AD = 2
+    PESO_AP = 8
+    SOMA_PESOS = PESO_AD + PESO_AP
+
     def __init__(self, ad1=None, ap1=None, ad2=None, ap2=None, ap3=None):
         self._ad1 = self._validar_nota(ad1)
         self._ap1 = self._validar_nota(ap1)
@@ -20,10 +33,10 @@ class Disciplina:
         self._aprovado = False
 
     # --- Validação ---
-    @staticmethod
-    def _validar_nota(value):
-        if value is not None and not (0 <= value <= 10):
-            raise NotaInvalidaError("Nota deve estar entre 0 e 10")
+    def _validar_nota(self, value):
+        menor, maior = self.MENOR_NOTA_ACEITA, self.MAIOR_NOTA_ACEITA
+        if value is not None and not (menor <= value <= maior):
+            raise NotaInvalidaError(f"Nota deve estar entre {menor} e {maior}")
         return value
 
     # --- Propriedades de entrada ---
@@ -68,11 +81,10 @@ class Disciplina:
         self._ap3 = self._validar_nota(value)
 
     # --- Funções de cálculo ---
-    @staticmethod
-    def calcular_nota_parcial(ad, ap):
+    def calcular_nota_parcial(self, ad, ap):
         if ad is None or ap is None:
             return None
-        return (ad * 2 + ap * 8) / 10
+        return (ad * self.PESO_AD + ap * self.PESO_AP) / self.SOMA_PESOS
 
     @staticmethod
     def calcular_media(n1, n2):
@@ -80,17 +92,16 @@ class Disciplina:
             return None
         return (n1 + n2) / 2
 
-    @staticmethod
-    def calcular_nf(n, n1, n2, ap3):
+    def calcular_nf(self, n, n1, n2, ap3):
         if n is None:
             return None
-        if n >= 6:
+        if n >= self.MEDIA_APROVACAO_DIRETA:
             return n
         if ap3 is not None:
             return (max(n1 or 0, n2 or 0) + ap3) / 2
         else:
             raise SemNotaFinalError(
-                f"Nota final não pode ser calculada sem AP3 se N < 6. A média N é {n:.2f}."
+                f"Nota final não pode ser calculada sem AP3 se N < 6. A média N é {n:.2f}."  # NoQA
             )
 
     # --- Propriedades derivadas ---
@@ -113,9 +124,8 @@ class Disciplina:
     @property
     def aprovado(self):
         try:
-            # self._aprovado = self.nf >= 6 and self.nf is not None
-            self._aprovado = self.nf >= 6.0 or (
-                self.nf >= 5.0 and self.ap3 is not None
+            self._aprovado = self.nf >= self.MEDIA_APROVACAO_DIRETA or (
+                self.nf >= self.MEDIA_APROVACAO_AP3 and self.ap3 is not None
             )
         except (SemNotaFinalError, TypeError):
             self._aprovado = False
@@ -124,24 +134,28 @@ class Disciplina:
     # --- Métodos auxiliares ---
     def nota_necessaria_n2_para_aprovacao(self):
         """
-        Retorna a nota mínima (N2) para obter média N >= 6, assumindo N1 conhecido.
+        Retorna a nota mínima (N2) para obter média N >= 6, assumindo N1
+        conhecido.
         """
         if self.n1 is None:
             return None
-        return max(0, 12 - self.n1)
+        return max(0, self.SOMA_MINIMA_APROVACAO_DIRETA - self.n1)
 
     def nota_necessaria_ap3_para_aprovacao(self):
         """
-        Retorna a nota mínima na AP3 para obter NF >= 6, assumindo N1 e N2 conhecidos.
+        Retorna a nota mínima na AP3 para obter NF >= 5, assumindo N1 e N2
+        conhecidos.
         """
         try:
-            if self.nf is not None and self.nf >= 6:
+            if self.nf is not None and self.nf >= self.MEDIA_APROVACAO_DIRETA:
                 return 0
         except SemNotaFinalError:
             if self.n1 is None or self.n2 is None:
                 return None
             else:
-                return max(0, 10 - max(self.n1, self.n2))
+                return max(
+                    0, self.SOMA_MINIMA_APROVACAO_AP3 - max(self.n1, self.n2)
+                )
 
     # --- Representação da instância ---
     def __repr__(self):

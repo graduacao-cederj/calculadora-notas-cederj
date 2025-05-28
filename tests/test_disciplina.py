@@ -1,4 +1,5 @@
 import pytest
+
 from disciplina.disciplina import (
     Disciplina,
     NotaInvalidaError,
@@ -94,7 +95,9 @@ def test_nota_necessaria_ap3_para_aprovacao():
 @pytest.mark.parametrize("campo", ["ad1", "ap1", "ad2", "ap2", "ap3"])
 @pytest.mark.parametrize("valor", [-1, 11])
 def test_notas_invalidas_lancam_erro(campo, valor):
-    with pytest.raises(NotaInvalidaError, match="Nota deve estar entre 0 e 10"):
+    with pytest.raises(
+        NotaInvalidaError, match="Nota deve estar entre 0.0 e 10.0"
+    ):
         kwargs = {campo: valor}
         Disciplina(**kwargs)
 
