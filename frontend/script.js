@@ -103,7 +103,7 @@ const handler = async function () {
 
         // Exibe o container de AP3 se necessário
         ap3Container.style.display =
-            filledAD1AP1 && filledAD2AP2 && json.nf < 6 ? "block" : "none";
+            filledAD1AP1 && filledAD2AP2 && json.n < 6 ? "block" : "none";
 
         if (filledAD1AP1) {
             document.getElementById("n1").textContent = json.n1.toFixed(2);
