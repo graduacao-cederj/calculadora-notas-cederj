@@ -1,0 +1,7 @@
+services:
+  notas_cederj_app:
+    image: notas_cederj_app
+    build: .
+    entrypoint: ./entrypoint.sh
+    ports:
+      - "8000:8000"
