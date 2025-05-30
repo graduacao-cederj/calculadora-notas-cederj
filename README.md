@@ -5,6 +5,11 @@ aluno, seguindo a metodologia de avaliação utilizada pelo CEDERJ. A aplicaçã
 composta por um **backend em FastAPI** e um **frontend em HTML, CSS (Bootstrap)
 e JavaScript puro**.
 
+<p align="center">
+<a href="https://calculadora-notas-cederj.onrender.com/" target="_blank">
+    <img src="https://img.shields.io/badge/-Acessar%20Calculadora-005500?style=for-the-badge&logo=koyeb&logoColor=white" alt="launch app" target="_blank"></a> 
+</p>
+
 ## 🎓 Sobre o CEDERJ
 
 O **CEDERJ** (Centro de Educação Superior à Distância do Estado do Rio de
